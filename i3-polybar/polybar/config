@@ -1,0 +1,237 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+color0 = ${xrdb:color0:#bf000000}
+color1 = ${xrdb:color1:#bf000000}
+color2 = ${xrdb:color2:#bf000000}
+color3 = ${xrdb:color3:#bf000000}
+color4 = ${xrdb:color4:#bf000000}
+color5 = ${xrdb:color5:#bf000000}
+color6 = ${xrdb:color6:#bf000000}
+color7 = ${xrdb:color7:#bf000000}
+color8 = ${xrdb:color8:#bf000000}
+color9 = ${xrdb:color9:#bf000000}
+color10 = ${xrdb:color10:#bf000000}
+color11 = ${xrdb:color11:#bf000000}
+color12 = ${xrdb:color12:#bf000000}
+color13 = ${xrdb:color13:#bf000000}
+color14 = ${xrdb:color14:#bf000000}
+color15 = ${xrdb:color15:#bf000000}
+
+background = ${colors.color0}
+background-alt = ${colors.color8}
+transparency = ff
+;background = #bf000000
+;background-alt = #444
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/bottom]
+bottom = true
+width = 100%
+height = 27
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 4
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+
+modules-left = i3
+modules-center = date
+;modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
+modules-right = filesystem pulseaudio memory cpu wlan battery
+
+wm-restack = i3
+
+;override-redirect = true
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#81a2be}%mountpoint%%{F-}: %percentage_used%%
+;label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+label-mode-padding = 2
+label-mode-foreground = ${colors.color4}
+label-mode-background = ${transparency}[${colors.color8}]
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.color8}
+label-focused-foreground= ${colors.foreground}
+label-focused-underline= ${self.label-focused-background}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "cpu: "
+format-prefix-foreground = ${colors.color4}
+format-underline = ${colors.background}
+label = %percentage:2%%
+label-foreground = ${colors.foreground}
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "mem: "
+format-prefix-foreground = ${colors.color4}
+format-underline = ${colors.background}
+label = %percentage_used%%
+label-foreground = ${colors.foreground}
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-underline = ${colors.background}
+label-connected = %essid%
+label-connected-foreground = ${colors.foreground}
+
+;format-disconnected =
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = no network
+label-disconnected-foreground = ${colors.color4}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.color4}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = %a, %d %b %Y
+date-alt = " %Y-%m-%d"
+
+time = %l:%M %p
+time-alt = %H:%M:%S
+
+;format-prefix = 
+;format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.background}
+
+label = %date% %time%
+label-foreground = ${colors.foreground}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume =  <label-volume>
+format-volume-prefix = "vol: "
+format-volume-prefix-foreground = ${colors.color4}
+label-volume = %percentage%%
+label-volume-foreground = ${colors.foreground}
+
+label-muted = 🔇 muted
+label-muted-foreground = ${colors.color4}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+;format-charging = <animation-charging> <label-charging>
+format-charging = <label-charging>
+label-charging-foreground = ${colors.foreground}
+format-charging-underline = ${colors.background}
+format-charging-prefix = "bat^: "
+format-charging-prefix-foreground = ${colors.color4}
+
+;format-discharging = <animation-discharging> <label-discharging>
+format-discharging = <label-discharging>
+label-discharging-foreground = ${colors.foreground}
+format-discharging-underline = ${self.format-charging-underline}
+format-discharging-prefix = "bat: "
+format-discharging-prefix-foreground = ${colors.color4}
+
+format-full-prefix = "bat: "
+format-full-prefix-foreground = ${colors.color4}
+label-full-foreground = ${colors.foreground}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.color4}
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini

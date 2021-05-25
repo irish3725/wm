@@ -34,11 +34,19 @@ exec wal -R
 # use compton
 exec picom
 
+exec cleartrash
+
 # start pulseaudio
 #exec pulseaudio --start
 
 # launch polybar
 exec $HOME/.config/polybar/launch.sh
+
+# enable tap to click here because I'm lazy
+exec xinput set-prop 13 297 1
+# disable sleep here because I am lazy
+exec xset s 0 0
+exec xset -dpms
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -74,6 +82,10 @@ set $up k
 set $down j
 set $left h
 set $right l
+
+# put clear cava on bottom of screen
+#for_window [class="FloatyCava" instance="urxvt"] floating enable, border none
+bindsym Mod4+c exec urxvt -tr -e cava
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
@@ -114,6 +126,12 @@ bindsym Mod1+Shift+Left move left
 bindsym Mod1+Shift+Down move down
 bindsym Mod1+Shift+Up move up
 bindsym Mod1+Shift+Right move right
+
+# easy li
+bindsym Mod4+Shift+1 exec sleep .2 && xdotool type "114701120195"
+bindsym Mod4+Shift+2 exec sleep .2 && xdotool type "114701IhacokB"
+bindsym Mod4+Shift+3 exec sleep .2 && xdotool type "thatisgoodsoup"
+bindsym Mod4+Shift+4 exec sleep .2 && xdotool type "justsoup@protonmail.com"
 
 # split in horizontal orientation
 #bindsym Mod1+Shift+h split h
@@ -184,33 +202,6 @@ bindsym Mod1+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym $left       resize shrink width 10 px or 10 ppt
-        bindsym $down       resize grow height 10 px or 10 ppt
-        bindsym $up         resize shrink height 10 px or 10 ppt
-        bindsym $right      resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left        resize shrink width 10 px or 10 ppt
-        bindsym Down        resize grow height 10 px or 10 ppt
-        bindsym Up          resize shrink height 10 px or 10 ppt
-        bindsym Right       resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or Mod1+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym Mod1+r mode "default"
-}
-
-bindsym Mod1+r mode "resize"
-
 #######################################################################
 ##                      Alex's Config                                ##
 #######################################################################
@@ -244,18 +235,29 @@ client.unfocused        $color0     $bg     $fg     $color0     $color0
 
 # launchers
 bindsym Mod1+f                  exec firefox
+bindsym Mod1+g                  exec steam
 bindsym Mod1+s                  exec spotify
-bindsym Mod1+c                  exec chromium
+bindsym Mod1+c                  exec brave
 bindsym Mod1+m                  exec atlauncher
-bindsym Mod1+d                  exec dolphin
+bindsym Mod1+r                  exec runelite
+bindsym Mod1+x                  exec dolphin
+bindsym Mod1+d                  exec ~/Discord/Discord
+bindsym Mod1+i                  exec idea
+bindsym Mod1+z                  exec zoom
+bindsym Mod1+a                  exec xrandr --output eDP1 --primary --mode 1920x1080 --output DP1 --mode 1920x1080 --left-of eDP1 && ./.config/polybar/launch.sh
 
 # change wallpaper and colorscheme
 bindsym Mod4+a                  exec wal -i $HOME/.config/i3/wallpapers/ --saturate 0.25 --iterative --backend colorz -o "/home/alex/.config/wal/setSlimBG.sh"
+bindsym Mod4+s                  exec wal -i $HOME/.config/i3/SUWallpapers/ --saturate 0.25 --iterative --backend colorz -o "/home/alex/.config/wal/setSlimBG.sh"
 
 # control volume
 bindsym Mod4+equal              exec pamixer -i 5
 bindsym Mod4+minus              exec pamixer -d 5
 bindsym Mod4+0                  exec pamixer -t
+
+# control connection to bluetooth headphones
+bindsym Mod4+b                  exec echo -e "connect 04:52:C7:31:A9:F5" | bluetoothctl
+bindsym Mod4+d                  exec echo -e "disconnect 04:52:C7:31:A9:F5" | bluetoothctl
 
 #############################################################################
 ## automatically start i3-config-wizard to offer the user to create a      ##
